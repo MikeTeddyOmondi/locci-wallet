@@ -3,6 +3,7 @@ import {
   IconDashboard,
   IconLock,
   IconMoodSmile,
+  IconSettings
 } from "@tabler/icons-react";
 import type { NavItem } from "@/types/nav-item";
 
@@ -10,44 +11,48 @@ export const navLinks: NavItem[] = [
   { label: "Dashboard", icon: IconDashboard, link: "/dashboard" },
 
   {
-    label: "Components",
+    label: "Wallets",
     icon: IconComponents,
-    initiallyOpened: true,
+    initiallyOpened: false,
     links: [
       {
-        label: "Table",
-        link: "/dashboard/table",
+        label: "All Wallets",
+        link: "/dashboard/wallets",
       },
       {
-        label: "Form",
-        link: "/dashboard/form",
+        label: "Create Wallets",
+        link: "/dashboard/create-wallets",
       },
     ],
   },
-  {
-    label: "Auth",
-    icon: IconLock,
-    initiallyOpened: true,
-    links: [
-      {
-        label: "Login",
-        link: "/login",
-      },
-      {
-        label: "Register",
-        link: "/register",
-      },
-    ],
-  },
-  {
-    label: "Sample",
-    icon: IconMoodSmile,
-    initiallyOpened: true,
-    links: [
-      {
-        label: "Landing",
-        link: "/",
-      },
-    ],
-  },
+
+  { label: "Settings", icon: IconSettings, link: "/dashboard/settings" },
+
+  // {
+  //   label: "Auth",
+  //   icon: IconLock,
+  //   initiallyOpened: true,
+  //   links: [
+  //     {
+  //       label: "Login",
+  //       link: "/login",
+  //     },
+  //     {
+  //       label: "Register",
+  //       link: "/register",
+  //     },
+  //   ],
+  // },
+
+  // {
+  //   label: "Sample",
+  //   icon: IconMoodSmile,
+  //   initiallyOpened: true,
+  //   links: [
+  //     {
+  //       label: "Landing",
+  //       link: "/",
+  //     },
+  //   ],
+  // },
 ];

@@ -11,15 +11,13 @@ export function HeroSection() {
   return (
     <Container pt="sm" size="lg">
       <div className={classes.inner}>
-        <Title className={classes.title}>MantineAdmin</Title>
-        <Title className={classes.subtitle}>
-          A Next.js 13 Admin template build with Mantine UI
-        </Title>
+        <Title className={classes.title}>LocciWallet</Title>
+        {/* <Title className={classes.subtitle}>
+          Your wallet of choice 
+        </Title> */}
 
         <Text className={classes.description} mt={30}>
-          Build fully functional dashboard web applications with ease –
-          Mantine-Admin includes all components and hooks to cover you in any
-          situation
+          Launch multiple wallets for different accounts.
         </Text>
 
         <Group mt={40}>
@@ -31,20 +29,20 @@ export function HeroSection() {
             }}
             rightSection={<IconArrowRight />}
           >
-            Get started
+            Sign Up
           </Button>
-          <Button
+          {/* <Button
             variant="outline"
             size="lg"
             className={classes.control}
             onClick={() => {
-              // open github
-              window.open("https://github.com/jotyy/mantine-admin");
+              // open github project
+              window.open("https://github.com/MikeTeddyOmondi/locci-wallet");
             }}
             rightSection={<IconStar />}
           >
-            Give a Star
-          </Button>
+            About Us
+          </Button> */}
         </Group>
       </div>
     </Container>

@@ -53,9 +53,9 @@ export function ProfileCard() {
         <Flex direction="column">
           <Title order={5}>Joshua Lee</Title>
           <Space h="xs" />
-          <Text fz="sm" c="dimmed" fw="500">
+          {/* <Text fz="sm" c="dimmed" fw="500">
             jotyy318@email.com
-          </Text>
+          </Text> */}
           <Space h="4" />
           <Text fz="sm" c="dimmed" fw="500">
             {`${"0x3D2f3bA6737C6999850E0c0Fe571190E6d27C40C".slice(0, 12)}..${"0x3D2f3bA6737C6999850E0c0Fe571190E6d27C40C".slice(-4)}`}
@@ -63,7 +63,7 @@ export function ProfileCard() {
         </Flex>
       </Card.Section>
 
-      <Card.Section style={sectionStyle}>
+      {/* <Card.Section style={sectionStyle}>
         <Group grow>
           <Stack gap={4}>
             <Text fz="sm" fw="500">
@@ -78,12 +78,12 @@ export function ProfileCard() {
             <Title order={3}>Etherum</Title>
           </Stack>
         </Group>
-      </Card.Section>
+      </Card.Section> */}
 
       <Card.Section style={sectionStyle}>
         <Group>
           <Button variant="light">Deposit</Button>
-          <Button>Buy/Sell</Button>
+          <Button>Withdraw</Button>
         </Group>
       </Card.Section>
     </Card>

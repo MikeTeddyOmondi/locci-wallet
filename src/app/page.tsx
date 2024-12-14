@@ -9,25 +9,26 @@ export default function Page() {
   return (
     <LandingContainer>
       <Header
-        links={[
-          {
-            link: "/about",
-            label: "Home",
-          },
-          {
-            link: "/learn",
-            label: "Features",
-          },
-          {
-            link: "/pricing",
-            label: "Pricing",
-          },
-        ]}
+        // links={[
+        //   {
+        //     link: "/about",
+        //     label: "Home",
+        //   },
+        //   {
+        //     link: "/learn",
+        //     label: "Features",
+        //   },
+        //   {
+        //     link: "/pricing",
+        //     label: "Pricing",
+        //   },
+        // ]}
+        links={[]}
       />
       <HeroSection />
       <FeaturesSection
         title="Features"
-        description="This project is an experiment to see how a modern admin application, with features like auth, API routes, and static pages would work in Next.js 13 app dir."
+        description="We provision wallets to segregate your funds to different accounts."
       />
       <EmailSection />
       <Footer />

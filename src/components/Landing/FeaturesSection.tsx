@@ -10,40 +10,28 @@ import {
   Title,
 } from "@mantine/core";
 import {
-  IconBrandMantine,
-  IconBrandNextjs,
-  IconBrandOauth,
-  IconBrandPlanetscale,
-  IconBrandReact,
+  IconCalendarDollar,
+  IconTrack,
+  IconWallet,
 } from "@tabler/icons-react";
 import classes from "./FeatureSection.module.css";
 
 export const featuresData = [
-  {
-    icon: IconBrandNextjs,
-    title: "Next.js",
-    description: "App dir, Routing, Layouts, Loading UI and API routes.",
-  },
-  {
-    icon: IconBrandReact,
-    title: "React 18",
-    description: "Server and Client Components. Use hook.",
-  },
-  {
-    icon: IconBrandPlanetscale,
-    title: "Database",
-    description: "ORM using Prisma and deployed on PlanetScale.",
-  },
-  {
-    icon: IconBrandMantine,
-    title: "Components",
-    description: "UI components built using Mantine UI.",
-  },
-  {
-    icon: IconBrandOauth,
-    title: "Authentication",
-    description: "Authentication using NextAuth.js and middlewares.",
-  },
+	{
+		icon: IconWallet,
+		title: "Micro Wallets",
+		description: "Multiple wallets for different use cases",
+	},
+	{
+		icon: IconCalendarDollar,
+		title: "Atomic Expenses",
+		description: "Decide where your money is spent.",
+	},
+	{
+		icon: IconTrack,
+		title: "Money Trail",
+		description: "Record every transaction for future audits.",
+	}
 ];
 
 interface FeatureProps {

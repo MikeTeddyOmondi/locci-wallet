@@ -83,7 +83,7 @@ export function Header({ links }: HeaderActionProps) {
           {items}
         </Group>
         <Button radius="xl" h={30}>
-          Try it now
+          Sign Up
         </Button>
 
         <Drawer opened={opened} onClose={toggle} size="md" padding="xl">

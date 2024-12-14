@@ -13,6 +13,7 @@ import {
 } from "@mantine/core";
 import { IconArrowRight, IconArrowUp } from "@tabler/icons-react";
 import classes from "./Dashboard.module.css";
+import { BalanceChart } from "./BalanceChart";
 
 const BalanceLeftStack = () => (
   <Stack gap="md" style={{ flex: 1 }}>
@@ -30,7 +31,7 @@ const BalanceLeftStack = () => (
       </Text>
     </Stack>
 
-    <Group>
+    {/* <Group>
       <Stack gap={2}>
         <Text size="sm" c="gray.6">
           Income
@@ -43,7 +44,7 @@ const BalanceLeftStack = () => (
         </Text>
         <Title order={5}>$ 1329.89</Title>
       </Stack>
-    </Group>
+    </Group> */}
     <Button size="sm" w={rem(140)} rightSection={<IconArrowRight size={14} />}>
       View more
     </Button>
@@ -104,8 +105,7 @@ export function BalanceCard() {
       </Card.Section>
       <Card.Section className={classes.section}>
         <BalanceLeftStack />
-        {/* <BalanceChart /> */}
-        <BalanceRightStack />
+        {/* <BalanceRightStack /> */}
       </Card.Section>
     </Card>
   );

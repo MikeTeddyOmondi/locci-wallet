@@ -9,14 +9,8 @@ export default function AuthLayout({ children }: Props) {
   return (
     <Box className={classes.wrapper}>
       <Title order={1} fw="bolder">
-        Mantine Admin
+        Locci Wallet
       </Title>
-      <Text c="dimmed" size="sm" mt={5}>
-        Don&apos;t have an account?{" "}
-        <Anchor size="sm" href="/register">
-          Sign Up
-        </Anchor>
-      </Text>
       <Box w={400}>{children}</Box>
     </Box>
   );
