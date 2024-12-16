@@ -49,7 +49,7 @@ export function LoginForm() {
 		} else {
 			notifications.show({
 				color: "red",
-				title: "Invalid Credentials",
+				title: "Login Error",
 				message: res.message,
 			});
 		}
