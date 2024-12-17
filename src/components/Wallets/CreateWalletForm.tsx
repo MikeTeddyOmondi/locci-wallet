@@ -19,12 +19,16 @@ import {
 import { modals } from "@mantine/modals";
 import { useForm } from "react-hook-form";
 import { customRandom, random, urlAlphabet } from "nanoid";
+import { notifications } from "@mantine/notifications";
+import { useRouter } from "next/navigation";
 
 export const CreateWalletForm = () => {
+	const router = useRouter();
+	
 	const {
 		register,
 		handleSubmit,
-		formState: { errors },
+		formState: { errors, isLoading },
 	} = useForm<WalletFormDetails>({
 		resolver: zodResolver(CreateWalletFormschema),
 		defaultValues: {
@@ -40,9 +44,23 @@ export const CreateWalletForm = () => {
 			title: "Created wallet successfully",
 			children: <Text size="sm">{data.label}</Text>,
 			labels: { confirm: "Confirm", cancel: "Cancel" },
-			onConfirm: () => {
+			onConfirm: async () => {
 				console.log("Confirmed");
-				createWallet(data);
+				const actionResult = await createWallet(data);
+				if (actionResult.success) {
+					notifications.show({
+						message: `Wallet ${actionResult.data?.wallet.walletId} created!`,
+					});
+					setTimeout(()=>{
+						router.push("/dashboard/wallets")
+					}, 3000)
+				} else {
+					notifications.show({
+						color: "red",
+						title: "Error creating wallet",
+						message: actionResult.errors,
+					});
+				}
 			},
 		});
 	};
@@ -103,7 +121,9 @@ export const CreateWalletForm = () => {
 					When checked you will be able to withdraw from this wallet.
 				</Text>
 				<Space h="md" />
-				<Button onClick={handleSubmit(onSubmit)}>Create</Button>
+				<Button disabled={isLoading} onClick={handleSubmit(onSubmit)}>
+					Create
+				</Button>
 			</Box>
 		</Paper>
 	);

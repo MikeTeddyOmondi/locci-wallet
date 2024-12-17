@@ -1,18 +1,16 @@
 import { relations } from "drizzle-orm";
 import {
-    boolean,
     timestamp,
     text,
-    primaryKey,
     integer,
-    pgTable, serial, varchar
+    pgTable,
+    serial,
+    varchar
 } from "drizzle-orm/pg-core"
 import type { AdapterAccountType } from "next-auth/adapters"
 
 export const users = pgTable("users", {
-    id: text("id")
-        .primaryKey()
-        .$defaultFn(() => crypto.randomUUID()),
+    id: text("id").notNull().primaryKey().unique().$defaultFn(() => crypto.randomUUID()),
     name: text("name"),
     email: text("email").unique(),
     emailVerified: timestamp("emailVerified", { mode: "date" }),
@@ -53,10 +51,10 @@ export const sessions = pgTable("session", {
 })
 
 export const wallets = pgTable("wallets", {
-    id: serial("id").notNull().primaryKey().unique(),
+    id: text("id").notNull().primaryKey().unique().$defaultFn(() => crypto.randomUUID()),
     walletId: varchar("wallet_id").notNull(),
     label: varchar("label").notNull(),
-    userId: serial("user_id").notNull(),
+    userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
 });
 
 export const walletsRelations = relations(wallets, ({ one }) => ({
@@ -65,6 +63,8 @@ export const walletsRelations = relations(wallets, ({ one }) => ({
         references: [users.id],
     }),
 }))
+
+export type Wallet = typeof wallets.$inferSelect;
 
 // export const verificationTokens = pgTable(
 //     "verificationToken",

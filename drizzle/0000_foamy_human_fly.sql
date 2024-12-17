@@ -25,16 +25,18 @@ CREATE TABLE "users" (
 	"emailVerified" timestamp,
 	"image" text,
 	"password" text,
+	CONSTRAINT "users_id_unique" UNIQUE("id"),
 	CONSTRAINT "users_email_unique" UNIQUE("email")
 );
 --> statement-breakpoint
 CREATE TABLE "wallets" (
-	"id" serial PRIMARY KEY NOT NULL,
+	"id" text PRIMARY KEY NOT NULL,
 	"wallet_id" varchar NOT NULL,
 	"label" varchar NOT NULL,
-	"user_id" serial NOT NULL,
+	"user_id" text NOT NULL,
 	CONSTRAINT "wallets_id_unique" UNIQUE("id")
 );
 --> statement-breakpoint
 ALTER TABLE "account" ADD CONSTRAINT "account_userId_users_id_fk" FOREIGN KEY ("userId") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "session" ADD CONSTRAINT "session_userId_users_id_fk" FOREIGN KEY ("userId") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;
+ALTER TABLE "session" ADD CONSTRAINT "session_userId_users_id_fk" FOREIGN KEY ("userId") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "wallets" ADD CONSTRAINT "wallets_user_id_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;

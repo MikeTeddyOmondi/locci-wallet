@@ -15,3 +15,5 @@ export const CreateWalletFormschema = z.object({
 });
 
 export type WalletFormDetails = z.infer<typeof CreateWalletFormschema>;
+
+

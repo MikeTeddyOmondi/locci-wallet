@@ -1,5 +1,5 @@
 {
-  "id": "41ef6aee-159a-4c6f-96c9-ca94a8ee200c",
+  "id": "fb0fa181-ceef-4e06-be36-36a00d3a0159",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -187,6 +187,13 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
+        "users_id_unique": {
+          "name": "users_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "id"
+          ]
+        },
         "users_email_unique": {
           "name": "users_email_unique",
           "nullsNotDistinct": false,
@@ -205,7 +212,7 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "text",
           "primaryKey": true,
           "notNull": true
         },
@@ -223,13 +230,27 @@
         },
         "user_id": {
           "name": "user_id",
-          "type": "serial",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         }
       },
       "indexes": {},
-      "foreignKeys": {},
+      "foreignKeys": {
+        "wallets_user_id_users_id_fk": {
+          "name": "wallets_user_id_users_id_fk",
+          "tableFrom": "wallets",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
         "wallets_id_unique": {

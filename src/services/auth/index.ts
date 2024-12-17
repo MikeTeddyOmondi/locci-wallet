@@ -18,6 +18,7 @@ const adapter = DrizzleAdapter(db, {
 } as any)
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
+    adapter,
     providers: [
         Credentials({
             credentials: {
@@ -69,7 +70,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         },
     },
     secret: process.env.AUTH_SECRET!,
-    session: {
-        strategy: 'jwt',
-    },
+    // session: {
+    //     strategy: 'jwt',
+    // },
 })
