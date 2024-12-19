@@ -3,7 +3,7 @@
 import { db } from "@/database";
 import { users, wallets } from "@/database/schemas";
 import { auth } from "@/services/auth";
-import { WalletFormDetails, intasend } from "@/services/intasend/config";
+import { FundWalletPayload, WalletFormDetails, intasend } from "@/services/intasend/config";
 import { eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import { v4 as uuid } from "uuid";
@@ -95,6 +95,58 @@ export async function listUserWallets(userId: string) {
       data: { userWallets },
     };
   } catch (error: any) {
+    return {
+      success: false,
+      errors: error.message,
+    };
+  }
+}
+
+export async function fundWalletCheckout(payload: FundWalletPayload) {
+  try {
+    const session = await auth();
+
+    if (!session) {
+      return redirect("/login");
+    }
+
+    const walletsApi = intasend.wallets();
+
+    // const payload: FundWalletPayload = {
+    //   first_name: "",
+    //   last_name: "",
+    //   email: "",
+    //   host: "",
+    //   amount: 0,
+    //   currency: "",
+    //   api_ref: "",
+    //   redirect_url: "",
+    //   wallet_id: ""
+    // } 
+
+    let checkout = await walletsApi.fundCheckout(payload);
+    console.log({ checkout });
+
+    let walletTransactions = await listWalletTransactions(payload.wallet_id);
+
+    // let userWallets = await db
+    //   .select({
+    //     id: wallets.id,
+    //     label: wallets.label,
+    //     walletId: wallets.walletId,
+    //   })
+    //   .from(wallets)
+    //   .innerJoin(users, eq(wallets.userId, (users.id)));
+
+    return {
+      success: true,
+      message: "Wallet checkout successful",
+      data: { checkout, walletTransactions },
+    };
+  } catch (error: any) {
+    // const apiErr = JSON.parse(error);
+    // console.log({ createWalletErr: apiErr }); // apiErr.errors[0].detail
+    console.log({ fundWalletCheckoutErr: error });
     return {
       success: false,
       errors: error.message,
