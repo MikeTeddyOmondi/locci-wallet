@@ -41,7 +41,7 @@ export const CreateWalletForm = () => {
 
 	const onSubmit = (data: WalletFormDetails) => {
 		modals.openConfirmModal({
-			title: "Created wallet successfully",
+			title: "Confirm wallet creation",
 			children: <Text size="sm">{data.label}</Text>,
 			labels: { confirm: "Confirm", cancel: "Cancel" },
 			onConfirm: async () => {

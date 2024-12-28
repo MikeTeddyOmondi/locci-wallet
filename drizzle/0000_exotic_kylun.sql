@@ -12,6 +12,15 @@ CREATE TABLE "account" (
 	"session_state" text
 );
 --> statement-breakpoint
+CREATE TABLE "newsletter" (
+	"id" text PRIMARY KEY NOT NULL,
+	"name" varchar,
+	"email" varchar NOT NULL,
+	"verified" boolean,
+	CONSTRAINT "newsletter_id_unique" UNIQUE("id"),
+	CONSTRAINT "newsletter_email_unique" UNIQUE("email")
+);
+--> statement-breakpoint
 CREATE TABLE "session" (
 	"sessionToken" text PRIMARY KEY NOT NULL,
 	"userId" text NOT NULL,

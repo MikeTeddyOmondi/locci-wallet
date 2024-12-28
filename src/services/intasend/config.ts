@@ -29,3 +29,48 @@ export const FundWalletPayloadSchema = z.object({
 })
 
 export type FundWalletPayload = z.infer<typeof FundWalletPayloadSchema>
+
+export type Invoice = {
+    invoice_id: string;
+    state: string;
+    provider: string;
+    charges: number;
+    net_amount: string;
+    currency: string;
+    value: number;
+    account: string;
+    api_ref: string;
+    clearing_status: string;
+    mpesa_reference: string | null;
+    host: string;
+    card_info: {
+        bin_country: string | null;
+        card_type: string;
+    };
+    retry_count: number;
+    failed_reason: string | null;
+    failed_code: string | null;
+    failed_code_link: string | null;
+    created_at: string;
+    updated_at: string;
+};
+
+export type Transaction = {
+    transaction_id: string;
+    invoice: Invoice | null;
+    currency: string;
+    value: number;
+    running_balance: number;
+    narrative: string;
+    trans_type: string;
+    status: string;
+    created_at: string;
+    updated_at: string;
+};
+
+export type WalletTransactions = {
+    count: number;
+    next: string | null;
+    previous: string | null;
+    results: Transaction[];
+};

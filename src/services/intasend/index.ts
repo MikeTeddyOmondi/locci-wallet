@@ -3,8 +3,9 @@
 import { db } from "@/database";
 import { users, wallets } from "@/database/schemas";
 import { auth } from "@/services/auth";
-import { FundWalletPayload, WalletFormDetails, intasend } from "@/services/intasend/config";
+import { FundWalletPayload, Transaction, WalletFormDetails, WalletTransactions, intasend } from "@/services/intasend/config";
 import { eq } from "drizzle-orm";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { v4 as uuid } from "uuid";
 
@@ -18,7 +19,6 @@ export async function createWallet(details: WalletFormDetails) {
 
     const walletsApi = intasend.wallets();
     let wallet = await walletsApi.create(details);
-    console.log({ wallet });
 
     let [queryResult] = await db
       .insert(wallets)
@@ -29,7 +29,8 @@ export async function createWallet(details: WalletFormDetails) {
         userId: session?.user?.id!,
       })
       .returning();
-    console.log({ queryResult });
+
+    revalidatePath("/dashboard/wallets")
 
     return {
       success: true,
@@ -55,14 +56,18 @@ export async function listWalletTransactions(walletId: string) {
     }
 
     const walletsApi = intasend.wallets();
+    let walletTransactions: WalletTransactions = await walletsApi.transactions(walletId);
 
-    let walletTransactions = await walletsApi.transactions(walletId);
-    console.log({ walletTransactions });
+    function filterTransactionsWithInvoices(transactions: WalletTransactions): Transaction[] {
+      return transactions.results.filter(transaction => transaction.invoice !== null);
+    }
+
+    const filteredTransactions = filterTransactionsWithInvoices(walletTransactions);
 
     return {
       success: true,
       message: "Found wallet transactions",
-      data: walletTransactions,
+      data: filteredTransactions,
     };
   } catch (error: any) {
     return {
@@ -111,37 +116,12 @@ export async function fundWalletCheckout(payload: FundWalletPayload) {
     }
 
     const walletsApi = intasend.wallets();
-
-    // const payload: FundWalletPayload = {
-    //   first_name: "",
-    //   last_name: "",
-    //   email: "",
-    //   host: "",
-    //   amount: 0,
-    //   currency: "",
-    //   api_ref: "",
-    //   redirect_url: "",
-    //   wallet_id: ""
-    // } 
-
     let checkout = await walletsApi.fundCheckout(payload);
-    console.log({ checkout });
-
-    let walletTransactions = await listWalletTransactions(payload.wallet_id);
-
-    // let userWallets = await db
-    //   .select({
-    //     id: wallets.id,
-    //     label: wallets.label,
-    //     walletId: wallets.walletId,
-    //   })
-    //   .from(wallets)
-    //   .innerJoin(users, eq(wallets.userId, (users.id)));
 
     return {
       success: true,
       message: "Wallet checkout successful",
-      data: { checkout, walletTransactions },
+      data: { checkout },
     };
   } catch (error: any) {
     // const apiErr = JSON.parse(error);

@@ -1,5 +1,5 @@
 import { v4 as uuid } from "uuid"
-import NextAuth, { User } from "next-auth"
+import NextAuth, { NextAuthConfig, User } from "next-auth"
 import { DrizzleAdapter } from "@auth/drizzle-adapter"
 import { encode as defaultEncode } from 'next-auth/jwt'
 import Credentials from "next-auth/providers/credentials"
@@ -17,7 +17,7 @@ const adapter = DrizzleAdapter(db, {
     // verificationTokensTable,
 } as any)
 
-export const { handlers, signIn, signOut, auth } = NextAuth({
+export const authConfig = {
     adapter,
     providers: [
         Credentials({
@@ -73,4 +73,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     // session: {
     //     strategy: 'jwt',
     // },
-})
+    pages: {
+        signIn: "/login",
+        newUser: "/register"
+    }
+} satisfies NextAuthConfig
+
+export const { handlers, signIn, signOut, auth } = NextAuth(authConfig)

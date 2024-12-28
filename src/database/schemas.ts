@@ -4,8 +4,9 @@ import {
     text,
     integer,
     pgTable,
-    serial,
-    varchar
+    varchar,
+    boolean,
+    uniqueIndex
 } from "drizzle-orm/pg-core"
 import type { AdapterAccountType } from "next-auth/adapters"
 
@@ -16,6 +17,10 @@ export const users = pgTable("users", {
     emailVerified: timestamp("emailVerified", { mode: "date" }),
     image: text("image"),
     password: text("password"),
+}, (table) => {
+    return [{
+        emailIdx: uniqueIndex("user_email_idx").on(table.email)
+    }];
 })
 
 export const usersRelations = relations(users, ({ many }) => ({
@@ -55,6 +60,11 @@ export const wallets = pgTable("wallets", {
     walletId: varchar("wallet_id").notNull(),
     label: varchar("label").notNull(),
     userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+}, (table) => {
+    return [{
+        walletIdx: uniqueIndex("wallet_id_idx").on(table.walletId),
+        labelIdx: uniqueIndex("label_idx").on(table.walletId),
+    }];
 });
 
 export const walletsRelations = relations(wallets, ({ one }) => ({
@@ -65,6 +75,17 @@ export const walletsRelations = relations(wallets, ({ one }) => ({
 }))
 
 export type Wallet = typeof wallets.$inferSelect;
+
+export const newsletter = pgTable("newsletter", {
+    id: text("id").notNull().primaryKey().unique().$defaultFn(() => crypto.randomUUID()),
+    name: varchar("name"),
+    email: varchar("email").unique().notNull(),
+    verified: boolean("verified").$default(() => false)
+}, (table) => {
+    return [{
+        emailIdx: uniqueIndex("email_idx").on(table.email),
+    }];
+});
 
 // export const verificationTokens = pgTable(
 //     "verificationToken",

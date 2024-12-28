@@ -1,7 +1,10 @@
 "use client";
 
 import { Wallet } from "@/database/schemas";
-import { fundWalletCheckout } from "@/services/intasend";
+import {
+	fundWalletCheckout,
+	listWalletTransactions,
+} from "@/services/intasend";
 import {
 	FundWalletPayload,
 	FundWalletPayloadSchema,
@@ -13,10 +16,11 @@ import {
 	Menu,
 	Paper,
 	Space,
-	Text,
 	TextInput,
 	Title,
 	NumberInput,
+	TableData,
+	Table,
 } from "@mantine/core";
 import { modals } from "@mantine/modals";
 import {
@@ -24,8 +28,6 @@ import {
 	MantineReactTable,
 	useMantineReactTable,
 } from "mantine-react-table";
-// import { customRandom, urlAlphabet, random } from "nanoid";
-import { useRouter } from "next/navigation";
 import { useMemo } from "react";
 import { useForm } from "react-hook-form";
 import QRCode from "react-qr-code";
@@ -35,7 +37,6 @@ interface WalletListProps {
 }
 
 export const WalletList = ({ wallets }: WalletListProps) => {
-	const router = useRouter();
 	//should be memoized or stable
 	const columns = useMemo<MRT_ColumnDef<Omit<Wallet, "userId">>[]>(
 		() => [
@@ -54,7 +55,11 @@ export const WalletList = ({ wallets }: WalletListProps) => {
 		setValue,
 	} = useForm<FundWalletPayload>({
 		resolver: zodResolver(FundWalletPayloadSchema),
-		defaultValues: {},
+		defaultValues: {
+			email: "",
+			amount: 20,
+			wallet_id: "",
+		},
 	});
 
 	const onSubmit = async (data: FundWalletPayload) => {
@@ -83,7 +88,7 @@ export const WalletList = ({ wallets }: WalletListProps) => {
 		});
 	};
 
-	function fundCheckout() {
+	function fundCheckout(wallet: Omit<Wallet, "userId">) {
 		modals.open({
 			title: "Fund Wallet - Checkout",
 			children: (
@@ -122,8 +127,9 @@ export const WalletList = ({ wallets }: WalletListProps) => {
 					<Space h="sm" />
 					<TextInput
 						label="Wallet ID"
-						error={errors.wallet_id?.message}
+						value={wallet.walletId}
 						{...register("wallet_id")}
+						error={errors.wallet_id?.message}
 					/>
 					<Space h="md" />
 					<Button
@@ -139,6 +145,43 @@ export const WalletList = ({ wallets }: WalletListProps) => {
 		});
 	}
 
+	async function viewWalletTransactions(wallet: Omit<Wallet, "userId">) {
+		let walletTransactions = await listWalletTransactions(wallet.walletId);
+
+		const tableBody = walletTransactions.data?.map((transaction) => [
+			transaction.transaction_id,
+			transaction.invoice?.invoice_id || "",
+			transaction.value.toFixed(2),
+			transaction.invoice?.charges.toFixed(2) || "",
+			transaction.invoice?.net_amount || "",
+			transaction.invoice?.provider || "",
+		]);
+
+		const tableData: TableData = {
+			caption: `Wallet Transactions - ${wallet.walletId}`,
+			head: [
+				"Transaction ID",
+				"Invoice ID",
+				"Amount",
+				"Charges",
+				"Net Amount",
+				"Provider",
+			],
+			body: tableBody,
+		};
+
+		modals.open({
+			title: "Wallet Transactions",
+			children: (
+				<>
+					{/* Transactions: {JSON.stringify(walletTransactions.data, null, 2)} */}
+					<Table data={tableData} />
+				</>
+			),
+			size: "70%",
+		});
+	}
+
 	const table = useMantineReactTable({
 		columns,
 		data: wallets,
@@ -147,10 +190,18 @@ export const WalletList = ({ wallets }: WalletListProps) => {
 		renderRowActionMenuItems: ({ row }) => (
 			<>
 				<Menu.Item
+					onClick={() => {
+						console.info("View Transactions");
+						viewWalletTransactions(row.original);
+					}}
+				>
+					View Transactions
+				</Menu.Item>
+				<Menu.Item
 					onClick={async (event) => {
 						event.stopPropagation();
 						console.info("Card Funding");
-						fundCheckout();
+						fundCheckout(row.original);
 					}}
 				>
 					Fund with Card
