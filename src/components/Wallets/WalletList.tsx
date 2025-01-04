@@ -8,7 +8,7 @@ import {
 import {
 	FundWalletPayload,
 	FundWalletPayloadSchema,
-} from "@/services/intasend/config";
+} from "@/services/intasend/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
 	Box,

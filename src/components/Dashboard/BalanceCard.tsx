@@ -13,42 +13,42 @@ import {
 } from "@mantine/core";
 import { IconArrowRight, IconArrowUp } from "@tabler/icons-react";
 import classes from "./Dashboard.module.css";
-import { BalanceChart } from "./BalanceChart";
+// import { BalanceChart } from "./BalanceChart";
 
 const BalanceLeftStack = () => (
-  <Stack gap="md" style={{ flex: 1 }}>
-    <Stack gap={4}>
-      <Text size="xs" c="gray.6">
-        Availabel Balance
-      </Text>
-      <Space h={2} />
-      <Title order={3}>$ 9572.23</Title>
-      <Text size="sm" c="gray.5">
-        + 0.0012.23(0.2%)
-        <span>
-          <IconArrowUp size={12} color="green" />
-        </span>
-      </Text>
-    </Stack>
+	<Stack gap="md" style={{ flex: 1 }}>
+		<Stack gap={4}>
+			<Text size="xs" c="gray.6">
+				Available Balance
+			</Text>
+			<Space h={2} />
+			<Title order={3}>Kshs. 10000</Title>
+			{/* <Text size="sm" c="gray.5">
+				+ 0.0012.23(0.2%)
+				<span>
+					<IconArrowUp size={12} color="green" />
+				</span>
+			</Text> */}
+		</Stack>
 
-    {/* <Group>
-      <Stack gap={2}>
-        <Text size="sm" c="gray.6">
-          Income
-        </Text>
-        <Title order={5}>$ 5729.28</Title>
-      </Stack>
-      <Stack gap={2}>
-        <Text size="sm" c="gray.6">
-          Expense
-        </Text>
-        <Title order={5}>$ 1329.89</Title>
-      </Stack>
-    </Group> */}
-    <Button size="sm" w={rem(140)} rightSection={<IconArrowRight size={14} />}>
-      View more
-    </Button>
-  </Stack>
+		{/* <Group>
+			<Stack gap={2}>
+				<Text size="sm" c="gray.6">
+					In
+				</Text>
+				<Title order={5}>Kshs. 5729</Title>
+			</Stack>
+			<Stack gap={2}>
+				<Text size="sm" c="gray.6">
+					Out
+				</Text>
+				<Title order={5}>Kshs. 1329</Title>
+			</Stack>
+		</Group> */}
+		<Button size="sm" w={rem(140)} rightSection={<IconArrowRight size={14} />}>
+			Cash Out
+		</Button>
+	</Stack>
 );
 
 const BalanceRightStack = () => (
@@ -96,7 +96,7 @@ export function BalanceCard() {
         <Title order={5}>Wallet Balance</Title>
         <Select
           value="march"
-          size="xs"
+          size="sm"
           data={[
             { value: "march", label: "March" },
             { value: "april", label: "April" },
@@ -105,7 +105,7 @@ export function BalanceCard() {
       </Card.Section>
       <Card.Section className={classes.section}>
         <BalanceLeftStack />
-        {/* <BalanceRightStack /> */}
+        <BalanceRightStack />
       </Card.Section>
     </Card>
   );

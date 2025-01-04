@@ -4,14 +4,14 @@ import { createWallet } from "@/services/intasend";
 import {
 	CreateWalletFormschema,
 	WalletFormDetails,
-} from "@/services/intasend/config";
+} from "@/services/intasend/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
 	Box,
 	Button,
 	Checkbox,
 	Paper,
-	Select,
+	// Select,
 	Space,
 	Text,
 	TextInput,

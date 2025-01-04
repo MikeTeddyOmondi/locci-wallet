@@ -4,14 +4,13 @@ import { Card, Group, SimpleGrid, Text, useMantineTheme } from "@mantine/core";
 import { IconArrowDownRight, IconArrowUpRight } from "@tabler/icons-react";
 
 interface StatsGroupProps {
-  data: { title: string; value: string; diff: number }[];
+  data: { title: string; value: string; }[];
 }
 
 export function StatsGroup({ data }: StatsGroupProps) {
   const theme = useMantineTheme();
   const stats = data.map((stat) => {
-    const DiffIcon = stat.diff > 0 ? IconArrowUpRight : IconArrowDownRight;
-
+    // const DiffIcon = stat.diff > 0 ? IconArrowUpRight : IconArrowDownRight;
     return (
       <Card key={stat.title} p="md" radius="md">
         <Group>
@@ -24,7 +23,7 @@ export function StatsGroup({ data }: StatsGroupProps) {
             </Text>
           </div>
         </Group>
-        <Text c="dimmed" fz="sm" mt="sm">
+        {/* <Text c="dimmed" fz="sm" mt="sm">
           <Text
             component="span"
             c={stat.diff > 0 ? "green.4" : "red.4"}
@@ -36,10 +35,10 @@ export function StatsGroup({ data }: StatsGroupProps) {
             size="1rem"
             color={stat.diff > 0 ? theme.colors.green[4] : theme.colors.red[4]}
           />
-        </Text>
+        </Text> */}
       </Card>
     );
   });
 
-  return <SimpleGrid cols={{ sm: 1, md: 3 }}>{stats}</SimpleGrid>;
+  return <SimpleGrid cols={{ sm: 1, md: 2 }}>{stats}</SimpleGrid>;
 }
