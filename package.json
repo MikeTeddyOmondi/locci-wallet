@@ -1,8 +1,8 @@
 {
-  "name": "mantine-admin",
+  "name": "locci-wallet",
   "version": "1.0.0",
-  "author": "Joshua Lee <jotyy318@gmail.com>",
-  "description": "A Modern Admin Dashboard made with Mantine/React/NextJS!",
+  "author": "MikeTeddyOmondi <contact@miketeddyomondi.com>",
+  "description": "A modern Wallet as a service platform!",
   "lint-staged": {
     ".": ["bun run lint"]
   },
@@ -11,6 +11,7 @@
       "pre-commit": "lint-staged"
     }
   },
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "start": "next start",

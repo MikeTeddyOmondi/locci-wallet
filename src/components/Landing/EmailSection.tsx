@@ -72,7 +72,10 @@ export function EmailSection() {
 					<div className={classes.controls}>
 						<TextInput
 							placeholder="Your email"
-							classNames={{ input: classes.input, root: classes.inputWrapper }}
+							classNames={{
+								input: classes.input,
+								root: classes.inputWrapper,
+							}}
 							{...register("email")}
 						/>
 						<Button

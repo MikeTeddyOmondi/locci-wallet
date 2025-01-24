@@ -3,9 +3,9 @@ import { OGImage } from "@/components/OGImage/OGImage";
 // App router includes @vercel/og.
 // No need to install it.
 
-export const runtime = "edge";
+export const runtime = "nodejs";
 
-export const alt = "Mantine Admin";
+export const alt = "Locci Wallet";
 export const size = {
   width: 1200,
   height: 630,

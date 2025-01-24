@@ -4,6 +4,7 @@ import { FeaturesSection } from "@/components/Landing/FeaturesSection";
 import { Header } from "@/components/Landing/Header";
 import { HeroSection } from "@/components/Landing/HeroSection";
 import { LandingContainer } from "@/components/Landing/LandingContainer";
+import { Suspense } from "react";
 
 export default function Page() {
   return (
@@ -30,7 +31,9 @@ export default function Page() {
         title="Features"
         description="We provision wallets to segregate your funds to different accounts."
       />
-      <EmailSection />
+      <Suspense fallback={<p>Loading...</p>}>
+        <EmailSection />
+      </Suspense>
       <Footer />
     </LandingContainer>
   );
